@@ -207,8 +207,8 @@ adhere to the following order:
 
   .. note::
 
-      Referral links are not permitted unless they directly benefit the ESPHome project.
-      This applies to all official ESPHome documentation or websites.
+      Referral links are only permitted if they provide a direct benefit to the ESPHome project. 
+      This policy applies to all official ESPHome documentation and websites.
 
 - **References**: To reference another document, use the ``:doc:`` and ``:ref:`` roles (references are set up globally
   and can be used between documents):

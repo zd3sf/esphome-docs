@@ -82,6 +82,8 @@ Beta Changes
 - Fix reactive power unit of measurement from VAR to var :esphomepr:`7757` by :ghuser:`felipecrs`
 - Disable bluetooth proxy during update :esphomepr:`7695` by :ghuser:`jzucker2`
 - ld2420: fix typo in log message :esphomepr:`7758` by :ghuser:`bfabio`
+- TuyaFan control should use oscillation_type :esphomepr:`7776` by :ghuser:`pethans`
+- Bump esphome-dashboard to 20241118.0 :esphomepr:`7782` by :ghuser:`jesserockz`
 
 All changes
 ^^^^^^^^^^^

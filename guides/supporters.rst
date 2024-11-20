@@ -697,6 +697,7 @@ Contributors
 - `Geoffrey Van Landeghem (@geoffrey-vl) <https://github.com/geoffrey-vl>`__
 - `Gérald Guiony (@gerald-guiony) <https://github.com/gerald-guiony>`__
 - `Gerard (@gerard33) <https://github.com/gerard33>`__
+- `German (@ghoeffner) <https://github.com/ghoeffner>`__
 - `Giampiero Baggiani (@giampiero7) <https://github.com/giampiero7>`__
 - `Gideon Kanikevich (@gid204) <https://github.com/gid204>`__
 - `Giel Janssens (@gieljnssns) <https://github.com/gieljnssns>`__
@@ -1460,6 +1461,7 @@ Contributors
 - `Peter Halicky (@peterhalicky) <https://github.com/peterhalicky>`__
 - `Peter Polacek (@PeterPolacek) <https://github.com/PeterPolacek>`__
 - `peterv99 (@peterv99) <https://github.com/peterv99>`__
+- `pethans (@pethans) <https://github.com/pethans>`__
 - `Peter Remøy Paulsen (@petrepa) <https://github.com/petrepa>`__
 - `Peter Kieser (@pfak) <https://github.com/pfak>`__
 - `Lee (@phatone007) <https://github.com/phatone007>`__
@@ -2027,4 +2029,4 @@ Contributors
 - `Christian Zufferey (@zuzu59) <https://github.com/zuzu59>`__
 - `Zynth-dev (@Zynth-dev) <https://github.com/Zynth-dev>`__
 
-*This page was last updated November 19, 2024.*
+*This page was last updated November 20, 2024.*

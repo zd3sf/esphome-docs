@@ -84,6 +84,8 @@ Beta Changes
 - ld2420: fix typo in log message :esphomepr:`7758` by :ghuser:`bfabio`
 - TuyaFan control should use oscillation_type :esphomepr:`7776` by :ghuser:`pethans`
 - Bump esphome-dashboard to 20241118.0 :esphomepr:`7782` by :ghuser:`jesserockz`
+- [http_request] Feed watchdog timeout around http request functions :esphomepr:`7786` by :ghuser:`jesserockz`
+- Bump esphome-dashboard to 20241120.0 :esphomepr:`7787` by :ghuser:`jesserockz`
 
 All changes
 ^^^^^^^^^^^

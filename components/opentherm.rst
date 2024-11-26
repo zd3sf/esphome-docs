@@ -62,8 +62,8 @@ Configuration variables:
 - **id** (*Optional*, :ref:`config-id`): Manually specify the ID used for code generation.  Required if you have
   multiple busses.
 
-Note abut sync mode
-*******************
+Note about sync mode
+********************
 
 The use of some components (like Dallas temperature sensors) may result in lost frames and protocol warnings from
 OpenTherm. Since OpenTherm is resilient by design and transmits its messages in a constant loop, these dropped frames

@@ -48,6 +48,19 @@ Release 2024.11.1 - November 22
 - Fix for OTA mode not activating in safe_mode when OTA section has an on_xxxx action  :esphomepr:`7796` by :ghuser:`Dilbert66`
 - Ensure storage I/O for ignored devices runs in the executor :esphomepr:`7792` by :ghuser:`bdraco`
 
+Release 2024.11.2 - November 27
+-------------------------------
+
+- [lvgl] Bugfixes :esphomepr:`7803` by :ghuser:`clydebarrow`
+- [docker] Leave run-time required libraries installed. :esphomepr:`7804` by :ghuser:`clydebarrow`
+- [qspi_dbi] Fix init sequences (Bugfix) :esphomepr:`7805` by :ghuser:`clydebarrow`
+- fix modbus crashing when bad data returned :esphomepr:`7810` by :ghuser:`ssieb`
+- [Modbus Controller] Fix issue #6477. Online automation triggering Offline :esphomepr:`7801` by :ghuser:`0x3333`
+- [fix] Status sensor does not check if required network component is missing :esphomepr:`7734` by :ghuser:`rvalitov`
+- keypad binary sensors should be initially off :esphomepr:`7808` by :ghuser:`ssieb`
+- fix 32 char SSIDs :esphomepr:`7834` by :ghuser:`ssieb`
+- [honeywell] use warning instead of failing :esphomepr:`7862` by :ghuser:`ssieb`
+
 Full list of changes
 --------------------
 

@@ -112,6 +112,7 @@ Contributors
 - `Andi Egli (@andilge) <https://github.com/andilge>`__
 - `Kieren  (@ando023) <https://github.com/ando023>`__
 - `András Bíró (@andrasbiro) <https://github.com/andrasbiro>`__
+- `Andre (@andre68723) <https://github.com/andre68723>`__
 - `Andreas Hergert (@andreashergert1984) <https://github.com/andreashergert1984>`__
 - `Andres Vahter (@andresv) <https://github.com/andresv>`__
 - `Andrew J.Swan (@andrewjswan) <https://github.com/andrewjswan>`__
@@ -191,6 +192,7 @@ Contributors
 - `bartoszpierzchlewicz (@bartoszpierzchlewicz) <https://github.com/bartoszpierzchlewicz>`__
 - `BartoszPierzchlewiczMacrix (@BartoszPierzchlewiczMacrix) <https://github.com/BartoszPierzchlewiczMacrix>`__
 - `Bascht74 (@Bascht74) <https://github.com/Bascht74>`__
+- `batchmanfr (@batchmanfr) <https://github.com/batchmanfr>`__
 - `bazuchan (@bazuchan) <https://github.com/bazuchan>`__
 - `Viktr (@BbIKTOP) <https://github.com/BbIKTOP>`__
 - `J. Nick Koston (@bdraco) <https://github.com/bdraco>`__
@@ -692,6 +694,7 @@ Contributors
 - `Greg Cormier (@gcormier) <https://github.com/gcormier>`__
 - `GeekVisit (@GeekVisit) <https://github.com/GeekVisit>`__
 - `Ian Reinhart Geiser (@geiseri) <https://github.com/geiseri>`__
+- `GelidusResearch (@GelidusResearch) <https://github.com/GelidusResearch>`__
 - `Gene Hand (@genehand) <https://github.com/genehand>`__
 - `R Huish (@genestealer) <https://github.com/genestealer>`__
 - `Geoff Davis (@geoffdavis) <https://github.com/geoffdavis>`__
@@ -2030,4 +2033,4 @@ Contributors
 - `Christian Zufferey (@zuzu59) <https://github.com/zuzu59>`__
 - `Zynth-dev (@Zynth-dev) <https://github.com/Zynth-dev>`__
 
-*This page was last updated November 22, 2024.*
+*This page was last updated November 27, 2024.*

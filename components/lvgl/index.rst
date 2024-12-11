@@ -125,7 +125,7 @@ The following configuration variables apply to the main ``lvgl`` component, in o
 
 
 - **resume_on_input** (*Optional*, boolean): If LVGL is paused and the user interacts with the screen, resume the activity of LVGL. Defaults to ``true``. "Interacts" means to release a touch or button, or rotate an encoder.
-- **color_depth** (*Optional*, string): The color deph at which the contents are generated. Currently only ``16`` is supported (RGB565, 2 bytes/pixel), which is the default value.
+- **color_depth** (*Optional*, string): The color depth at which the contents are generated. Currently only ``16`` is supported (RGB565, 2 bytes/pixel), which is the default value.
 - **buffer_size** (*Optional*, percentage): The percentage of screen size to allocate buffer memory. Default is ``100%`` (or ``1.0``). For devices without PSRAM, the recommended value is ``25%``.
 - **draw_rounding** (*Optional*, int): An optional value to use for rounding draw areas to a specified boundary. Defaults to 2. Useful for displays that require draw windows to be on specified boundaries (usually powers of 2.)
 - **log_level** (*Optional*, string): Set the logger level specifically for the messages of the LVGL library: ``TRACE``, ``INFO``, ``WARN``, ``ERROR``, ``USER``, ``NONE``. Defaults to ``WARN``.

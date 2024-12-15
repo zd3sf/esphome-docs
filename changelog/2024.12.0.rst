@@ -64,6 +64,15 @@ Breaking Changes
 - MQTT sensors handling of publishing NaN values  :esphomepr:`7768` by :ghuser:`kbullet` (breaking-change)
 - Synchronise esp32 boards with platform version 51.03.07 :esphomepr:`7945` by :ghuser:`jesserockz` (breaking-change)
 
+Beta Changes
+^^^^^^^^^^^^
+
+- [const] Add RMT CONF variables to const.py :esphomepr:`7953` by :ghuser:`swoboda1337`
+- [sgp30] Set default update interval to 60s :esphomepr:`7952` by :ghuser:`jesserockz` (breaking-change)
+- [dallas_temp] Move delay_microseconds_safe to iram :esphomepr:`7957` by :ghuser:`swoboda1337`
+- [i2s_audio] Bugfix: Correctly set ring buffer size :esphomepr:`7959` by :ghuser:`kahrendt`
+- [adc] Restore missing LIBRETINY code in a separated file :esphomepr:`7955` by :ghuser:`edwardtfn`
+
 All changes
 ^^^^^^^^^^^
 
@@ -168,7 +177,11 @@ All changes
 - [lvgl] Add `on_change` event :esphomepr:`7939` by :ghuser:`clydebarrow`
 - Synchronise esp32 boards with platform version 51.03.07 :esphomepr:`7945` by :ghuser:`jesserockz` (breaking-change)
 - [i2c] Use correct macro to determine number of i2c peripherals for idf :esphomepr:`7947` by :ghuser:`jesserockz`
-
+- [const] Add RMT CONF variables to const.py :esphomepr:`7953` by :ghuser:`swoboda1337`
+- [sgp30] Set default update interval to 60s :esphomepr:`7952` by :ghuser:`jesserockz` (breaking-change)
+- [dallas_temp] Move delay_microseconds_safe to iram :esphomepr:`7957` by :ghuser:`swoboda1337`
+- [i2s_audio] Bugfix: Correctly set ring buffer size :esphomepr:`7959` by :ghuser:`kahrendt`
+- [adc] Restore missing LIBRETINY code in a separated file :esphomepr:`7955` by :ghuser:`edwardtfn`
 
 Past Changelogs
 ---------------

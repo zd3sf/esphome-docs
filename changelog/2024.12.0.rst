@@ -41,7 +41,6 @@ more modern architecture, especially if you're using the ESPHome Device Compiler
 devices.
 
 
-
 Full list of changes
 --------------------
 
@@ -63,6 +62,7 @@ Breaking Changes
 - Fix entity name validation to allow "Off" and "On" :esphomepr:`7821` by :ghuser:`jesserockz` (breaking-change)
 - MQTT sensors handling of publishing NaN values  :esphomepr:`7768` by :ghuser:`kbullet` (breaking-change)
 - Synchronise esp32 boards with platform version 51.03.07 :esphomepr:`7945` by :ghuser:`jesserockz` (breaking-change)
+- [sgp30] Set default update interval to 60s :esphomepr:`7952` by :ghuser:`jesserockz` (breaking-change)
 
 Beta Changes
 ^^^^^^^^^^^^

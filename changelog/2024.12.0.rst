@@ -40,6 +40,11 @@ This is due to both waning support as it relates to tooling and performance reas
 more modern architecture, especially if you're using the ESPHome Device Compiler to build/compile firmware for your
 devices.
 
+Release 2024.12.1 - December 19
+-------------------------------
+
+- [core] Bugfix: Implement ring buffer with xRingbuffer :esphomepr:`7973` by :ghuser:`kahrendt`
+
 
 Full list of changes
 --------------------

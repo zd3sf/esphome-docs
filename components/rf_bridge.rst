@@ -1,4 +1,4 @@
-Sonoff RF Bridge Component
+RF Bridge Component
 ===================
 
 .. seo::

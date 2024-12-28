@@ -328,7 +328,7 @@ The raw data will be available in the log and can later be used with :ref:`rf_br
 .. note::
 
     A conversion from *B1* (received) raw format to *B0* (send) raw command format should be applied.
-    For this, you can use the tool `BitBucket Converter <https://bbconv.hrbl.pl/>`__ or `B1 Converter <https://bbconv.hrbl.pl/>`__
+    For this, you can use the tool `BitBucket Converter <https://bbconv.hrbl.pl/>`__ or `B1 Converter <https://jonajona.nl/convertB1.html/>`__
 
 .. note::
 

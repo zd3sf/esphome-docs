@@ -6,10 +6,13 @@ RF Bridge Component
     :image: rf_bridge.jpg
     :keywords: RF Bridge
 
-The ``RF Bridge`` Component provides the ability to send and receive 433MHz singals (like RF remotes/key fobs) using radio microcontrollers founds on RF bridge devices ( eg. Sonoff RF bridge).
+The ``RF Bridge`` Component provides the ability to send and receive 433MHz signals (like RF remotes/key fobs) using radio microcontrollers founds on RF bridge devices ( eg. Sonoff RF bridge).
 
-The black Sonoff RF Bridge (R1, R2 V1.0) has an ESP8266 (for WIFI/ESPHome) and embedded EFM8BB1 microcontroller (433 MHz). The white Sonoff RF Bridge (R2 V2.0) has ESP8266 and an embeded OB38S003 microcontroller (433 MHz). This component implements the communication protocol between the ESP8266 and the firmware of ``efm8bb1`` or ``OB38S003``. 
-The device is connected via the
+* The black Sonoff RF Bridge (R1, R2 V1.0) has an ESP8266 (for WIFI/ESPHome) and an embedded EFM8BB1 microcontroller (433 MHz). 
+* The white Sonoff RF Bridge (R2 V2.0) has ESP8266 and an embedded OB38S003 microcontroller (433 MHz). 
+
+This component implements the communication protocol between the ESP8266 and the firmware of ``EFM8BB1`` or ``OB38S003``. 
+The radio microcontroller is connected to the ESP8266 via the
 :doc:`UART bus </components/uart>`. The uart bus must be configured at the same speed of the module
 which is 19200bps.
 
@@ -20,9 +23,9 @@ which is 19200bps.
 
 .. figure:: images/rf_bridge-full.jpg
     :align: center
-    :width: 60.0%
+    :width: 50.0%
 
-    Sonoff RF Bridge 433, version R1 or R2 V1.0
+    Sonoff RF Bridge 433 (version R1 or R2 V1.0)
 
 .. code-block:: yaml
 
@@ -58,7 +61,7 @@ Configuration variables:
 ----------------------------
 
 With this configuration option you can write complex automations whenever a code is
-received. To use the code, use a :ref:`lambda <config-lambda>` template. The code
+received by the bridge. To use the code, use a :ref:`lambda <config-lambda>` template. The code
 and the corresponding protocol timings are available inside that lambda under the
 variables named ``code``, ``sync``, ``high`` and ``low``.
 
@@ -97,7 +100,7 @@ Configuration options:
 - **low** (**Required**, int, :ref:`templatable <config-templatable>`): RF Low timing
 - **high** (**Required**, int, :ref:`templatable <config-templatable>`): RF high timing
 - **code** (**Required**, int, :ref:`templatable <config-templatable>`): RF code
-- **id** (*Optional*, :ref:`config-id`): Manually specify the ID of the RF Bridge if you have multiple components.
+- **id** (*Optional*, :ref:`config-id`): Manually specify the ID of the RF Bridge if you have multiple bridges or multiple bridge components.
 
 .. note::
 
@@ -170,18 +173,20 @@ Configuration options:
 ``rf_bridge.send_raw`` Action
 -----------------------------
 
-Send a raw command to the onboard radio chip. The OEM RF firmware is able to send raw only for standard signals (usually short), for other signals (B0 transmit), Portisch fimrware is needed.
+Send a raw command to the onboard radio chip. The OEM RF firmware is able to send raw only for standard signals (usually short), for other signals (B0 transmit), Portisch or Mightymos fimrware is needed.
 
 
-This can be used to send raw RF codes in automation's, mainly for protocols that are not supported.
-If you have *Portisch* firmware installed, these raw codes can be obtained with the help of :ref:`rf_bridge-start_bucket_sniffing_action`
+This can be used to send raw RF codes in automations, mainly for protocols that are not supported.
+If you have *Portisch* or *Mightymos* firmware installed, these raw codes can be obtained with the help of :ref:`rf_bridge-start_bucket_sniffing_action`
 
 .. code-block:: yaml
 
     on_...:
       then:
-        - rf_bridge.send_raw:
-            raw: AAA5070008001000ABC12355
+        - rf_bridge.send_raw: #in OEM firmware 
+            raw: 'AAA5070008001000ABC12355'
+        - rf_bridge.send_raw: #in Portisch firmware
+            raw: 'AAB04C0408137702440111139B38192A192A1A1A19292A192A1A19292929292A1A1A1A1A192A19292A1A192A192A1A1A1A1A1A1A1A192A1A1A1A1A1A1A1A1A1A1A1A192A1929292A192A1A1929292955'
 
 Configuration options:
 
@@ -348,7 +353,18 @@ Configuration options:
 
         id(rf_bridge).start_bucket_sniffing();
 
+.. _rf_bridge-restart radio controller:
 
+Reset radio
+***********
+
+For *Portisch* or *Mightymos* firmware
+
+.. code-block:: yaml
+
+
+        - rf_bridge.send_raw: #in OEM firmware 
+            raw: 'AAFE55'
 
 
 Getting started with Home Assistant
@@ -368,8 +384,8 @@ Home Assistant as events and will also setup a service so you can send codes wit
       baud_rate: 0
 
     api:
-      actions:
-          ## send standard RF using intiger values 
+      actions: ## create actions in HA
+           #Send standard RF using intiger values 
         - action: send_rf_code  
           variables:
             sync: int
@@ -383,7 +399,7 @@ Home Assistant as events and will also setup a service so you can send codes wit
                 high: !lambda 'return high;'
                 code: !lambda 'return code;'
         
-        ## send raw RF using  
+        ## send raw RF  
         - action: send_rf_code_raw
           variables:
             raw: string
@@ -422,11 +438,12 @@ Home Assistant as events and will also setup a service so you can send codes wit
                 length: !lambda 'return format_hex(data.length);'
                 protocol: !lambda 'return format_hex(data.protocol);'
                 code: !lambda 'return data.code;'
+  
 
 
 Now your latest received code will be in an event.
 
-To trigger the automation from Home Assistant you can invoke the service with this code:
+To trigger the automation from Home Assistant you can invoke the service/action with this code:
 
 .. code-block:: yaml
 
@@ -439,6 +456,61 @@ To trigger the automation from Home Assistant you can invoke the service with th
           low: 0x800
           high: 0x1000
           code: 0xABC123
+
+Additional example configurations in ESPHome
+
+.. code-block:: yaml
+
+    button:
+      - platform: template
+        name: Advanced sniffing start
+        on_press:
+          then:
+            - rf_bridge.start_advanced_sniffing
+
+      - platform: template
+        name: Advanced sniffing stop
+        on_press:
+          then:
+            - rf_bridge.stop_advanced_sniffing    
+
+      - platform: template
+        name: Bucket sniffing start
+        on_press:
+          then:
+            - rf_bridge.start_bucket_sniffing 
+    
+      - platform: template
+        name: Beep
+        on_press:
+          then:
+            - rf_bridge.beep:
+                duration: 100
+
+      - platform: template
+        name: "restart radio"
+        id: mcu_reset
+        on_press:
+          then:
+          - rf_bridge.send_raw: 
+              raw: 'AAFE55'   
+
+    switch:
+      - platform: template
+        name: "example LED strip"
+        optimistic: true
+        turn_on_action: 
+          - rf_bridge.send_code:
+              sync: 0x2F4A
+              low: 0x0166
+              high: 0x0483
+              code: 0x00C301    
+        turn_off_action: 
+          - rf_bridge.send_code:
+              sync: 0x2F1A 
+              low: 0x0184 
+              high: 0x048C 
+              code: 0x00C303
 
 See Also
 --------

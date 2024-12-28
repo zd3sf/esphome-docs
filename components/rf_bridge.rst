@@ -1,4 +1,4 @@
-RF Bridge Component
+Sonoff RF Bridge Component
 ===================
 
 .. seo::
@@ -6,9 +6,10 @@ RF Bridge Component
     :image: rf_bridge.jpg
     :keywords: RF Bridge
 
-The ``RF Bridge`` Component provides the ability to send and receive 433MHz remote codes using the
-embedded EFM8BB1 microcontroller. This component implements the communication protocol
-that the original ``efm8bb1`` firmware implements. The device is connected via the
+The ``RF Bridge`` Component provides the ability to send and receive 433MHz singals (like RF remotes/key fobs) using radio microcontrollers founds on RF bridge devices ( eg. Sonoff RF bridge).
+
+The black Sonoff RF Bridge (R1, R2 V1.0) has an ESP8266 (for WIFI/ESPHome) and embedded EFM8BB1 microcontroller (433 MHz). The white Sonoff RF Bridge (R2 V2.0) has ESP8266 and an embeded OB38S003 microcontroller (433 MHz). This component implements the communication protocol between the ESP8266 and the firmware of ``efm8bb1`` or ``OB38S003``. 
+The device is connected via the
 :doc:`UART bus </components/uart>`. The uart bus must be configured at the same speed of the module
 which is 19200bps.
 
@@ -27,9 +28,13 @@ which is 19200bps.
 
     # Example configuration entry
     uart:
+      id: uart_hub
       baud_rate: 19200
+      tx_pin: 1
+      rx_pin: 3
 
     rf_bridge:
+      id: kitchen_RF_bridge
       on_code_received:
         - homeassistant.event:
             event: esphome.rf_code_received
@@ -42,8 +47,8 @@ which is 19200bps.
 Configuration variables:
 ------------------------
 
-- **uart_id** (*Optional*, :ref:`config-id`): Manually specify the ID of the UART hub.
-- **id** (*Optional*, :ref:`config-id`): Manually specify the ID used for code generation.
+- **id** (*Optional*, :ref:`config-id`): Manually specify the ID of the UART hub.
+- **id** (*Optional*, :ref:`config-id`): Manually specify the ID of the RF bridge. Used for code generation and event tracking in home assistant. 
 - **on_code_received** (*Optional*, :ref:`Automation <automation>`): An action to be
   performed when a code is received. See :ref:`rf_bridge-on_code_received`.
 
@@ -53,7 +58,7 @@ Configuration variables:
 ----------------------------
 
 With this configuration option you can write complex automations whenever a code is
-received. To use the code, use a :ref:`lambda <config-lambda>` template, the code
+received. To use the code, use a :ref:`lambda <config-lambda>` template. The code
 and the corresponding protocol timings are available inside that lambda under the
 variables named ``code``, ``sync``, ``high`` and ``low``.
 
@@ -74,7 +79,7 @@ variables named ``code``, ``sync``, ``high`` and ``low``.
 ``rf_bridge.send_code`` Action
 ------------------------------
 
-Send an RF code using this action in automations.
+Send a standard (0xA5) RF code using this action in automations.
 
 .. code-block:: yaml
 
@@ -103,27 +108,24 @@ Configuration options:
         id(rf_bridge).send_code(0x700, 0x800, 0x1000, 0xABC123);
 
 
-.. _rf_bridge-send_raw_action:
+.. _rf_bridge-beep_action:
 
-``rf_bridge.send_raw`` Action
------------------------------
+``rf_bridge.beep`` Action
+--------------------------
 
-Send a raw command to the onboard EFM8BB1 chip.
-You can see a list of available commands and format in the `Portisch Wiki <https://github.com/Portisch/RF-Bridge-EFM8BB1/wiki/Commands>`__
+Activate the internal buzzer to make a beep.
 
-This can be used to send raw RF codes in automation's, mainly for protocols that are not supported.
-If you have *Portisch* firmware installed, these raw codes can be obtained with the help of :ref:`rf_bridge-start_bucket_sniffing_action`
 
 .. code-block:: yaml
 
     on_...:
       then:
-        - rf_bridge.send_raw:
-            raw: AAA5070008001000ABC12355
+        - rf_bridge.beep:
+            duration: 100
 
 Configuration options:
 
-- **raw** (**Required**, string, :ref:`templatable <config-templatable>`): RF raw string
+- **duration** (**Required**, string, :ref:`templatable <config-templatable>`): beep duration in milliseconds.
 - **id** (*Optional*, :ref:`config-id`): Manually specify the ID of the RF Bridge if you have multiple components.
 
 .. note::
@@ -132,7 +134,7 @@ Configuration options:
 
     .. code-block:: cpp
 
-        id(rf_bridge).send_raw("AAA5070008001000ABC12355");
+        id(rf_bridge).beep(100);
 
 
 .. _rf_bridge-learn_action:
@@ -162,12 +164,49 @@ Configuration options:
         id(rf_bridge).learn();
 
 
+
+.. _rf_bridge-send_raw_action:
+
+``rf_bridge.send_raw`` Action
+-----------------------------
+
+Send a raw command to the onboard radio chip. The OEM RF firmware is able to send raw only for standard signals (usually short), for other signals (B0 transmit), Portisch fimrware is needed.
+
+
+This can be used to send raw RF codes in automation's, mainly for protocols that are not supported.
+If you have *Portisch* firmware installed, these raw codes can be obtained with the help of :ref:`rf_bridge-start_bucket_sniffing_action`
+
+.. code-block:: yaml
+
+    on_...:
+      then:
+        - rf_bridge.send_raw:
+            raw: AAA5070008001000ABC12355
+
+Configuration options:
+
+- **raw** (**Required**, string, :ref:`templatable <config-templatable>`): RF raw string
+- **id** (*Optional*, :ref:`config-id`): Manually specify the ID of the RF Bridge if you have multiple components.
+
+.. note::
+
+    This action can also be written in :ref:`lambdas <config-lambda>`:
+
+    .. code-block:: cpp
+
+        id(rf_bridge).send_raw("AAA5070008001000ABC12355");
+
+
+
+
 Portisch firmware
 -----------------
 
-If you have flashed the secondary MCU with the `Portisch firmware <https://github.com/Portisch/RF-Bridge-EFM8BB1>`__,
-ESPHome is able to receive the extra protocols that can be decoded as well as activate the other modes supported.
-
+The radio microcontroller (MCU) can be flashed with an alternative firmware which allows for sniffining and transmitting 
+advanced protocols (e.g raw, 0xB0, 0xB1, 0xA8) in addition to the standard recieve/transmit (0xA4,0xA5).
+If you have flashed the secondary MCU with the `Portisch firmware <https://github.com/Portisch/RF-Bridge-EFM8BB1>`__ or `Mightymos firmware <https://github.com/mightymos/RF-Bridge-OB38S003>`__,
+ESPHome is able to receive the extra protocols that can be decoded as well as activate the other modes supported. The below Triggers/actions are only for Portisch firmware. 
+You can see a list of available commands and format in the `Portisch Wiki <https://github.com/Portisch/RF-Bridge-EFM8BB1/wiki/Commands>`__
 
 .. _rf_bridge-on_advanced_code_received:
 
@@ -284,7 +323,7 @@ The raw data will be available in the log and can later be used with :ref:`rf_br
 .. note::
 
     A conversion from *B1* (received) raw format to *B0* (send) raw command format should be applied.
-    For this, you can use the tool `BitBucket Converter <https://bbconv.hrbl.pl/>`__
+    For this, you can use the tool `BitBucket Converter <https://bbconv.hrbl.pl/>`__ or `B1 Converter <https://bbconv.hrbl.pl/>`__
 
 .. note::
 
@@ -310,33 +349,7 @@ Configuration options:
         id(rf_bridge).start_bucket_sniffing();
 
 
-.. _rf_bridge-beep_action:
 
-``rf_bridge.beep`` Action
-*************************
-
-Activate the internal buzzer to make a beep.
-
-
-.. code-block:: yaml
-
-    on_...:
-      then:
-        - rf_bridge.beep:
-            duration: 100
-
-Configuration options:
-
-- **duration** (**Required**, string, :ref:`templatable <config-templatable>`): beep duration in milliseconds.
-- **id** (*Optional*, :ref:`config-id`): Manually specify the ID of the RF Bridge if you have multiple components.
-
-.. note::
-
-    This action can also be written in :ref:`lambdas <config-lambda>`:
-
-    .. code-block:: cpp
-
-        id(rf_bridge).beep(100);
 
 Getting started with Home Assistant
 -----------------------------------
@@ -346,9 +359,18 @@ Home Assistant as events and will also setup a service so you can send codes wit
 
 .. code-block:: yaml
 
+    uart:
+      tx_pin: 1
+      rx_pin: 3
+      baud_rate: 19200
+
+    logger:
+      baud_rate: 0
+
     api:
       actions:
-        - action: send_rf_code
+          ## send standard RF using intiger values 
+        - action: send_rf_code  
           variables:
             sync: int
             low: int
@@ -360,20 +382,21 @@ Home Assistant as events and will also setup a service so you can send codes wit
                 low: !lambda 'return low;'
                 high: !lambda 'return high;'
                 code: !lambda 'return code;'
+        
+        ## send raw RF using  
+        - action: send_rf_code_raw
+          variables:
+            raw: string
+          then:
+            - rf_bridge.send_raw:
+                raw: !lambda 'return raw;'
+
         - action: learn
           then:
             - rf_bridge.learn
 
-    uart:
-      tx_pin: 1
-      rx_pin: 3
-      baud_rate: 19200
-
-    logger:
-      baud_rate: 0
-
     rf_bridge:
-      on_code_received:
+      on_code_received: #all fimrwares, can be reported as intiger, hex, or both, as desired. 
         then:
           - homeassistant.event:
               event: esphome.rf_code_received
@@ -382,6 +405,23 @@ Home Assistant as events and will also setup a service so you can send codes wit
                 low: !lambda 'return format_hex(data.low);'
                 high: !lambda 'return format_hex(data.high);'
                 code: !lambda 'return format_hex(data.code);'
+
+        - homeassistant.event:
+              event: esphome.rf_code_received
+              data:
+                sync: !lambda 'return int(data.sync);'
+                low: !lambda 'return int(data.low);'
+                high: !lambda 'return int(data.high);'
+                code: !lambda 'return int(data.code);'
+  
+      on_advanced_code_received: ##only on Portisch or mightymos firmwares
+        then:
+          - homeassistant.event:
+              event: esphome.rf_advanced_code_received
+              data:
+                length: !lambda 'return format_hex(data.length);'
+                protocol: !lambda 'return format_hex(data.protocol);'
+                code: !lambda 'return data.code;'
 
 
 Now your latest received code will be in an event.
@@ -406,6 +446,7 @@ See Also
 - :apiref:`rf_bridge/rf_bridge.h`
 - :ref:`lambda_magic_rf_queues`
 - `RF-Bridge-EFM8BB1 <https://github.com/Portisch/RF-Bridge-EFM8BB1>`__ by `Portisch <https://github.com/Portisch>`__
+- `Mightymos firmware <https://github.com/mightymos/RF-Bridge-OB38S003>`__
 - :doc:`/components/uart`
 - :doc:`/components/remote_receiver`
 - :doc:`/components/remote_transmitter`

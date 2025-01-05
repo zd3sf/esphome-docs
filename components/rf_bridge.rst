@@ -49,8 +49,6 @@ which is 19200bps.
 
 Configuration variables:
 ------------------------
-
-- **id** (*Optional*, :ref:`config-id`): Manually specify the ID of the UART hub.
 - **id** (*Optional*, :ref:`config-id`): Manually specify the ID of the RF bridge. Used for code generation and event tracking in home assistant. 
 - **on_code_received** (*Optional*, :ref:`Automation <automation>`): An action to be
   performed when a code is received. See :ref:`rf_bridge-on_code_received`.
